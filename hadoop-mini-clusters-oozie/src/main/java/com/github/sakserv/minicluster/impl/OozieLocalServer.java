@@ -13,7 +13,6 @@ import org.apache.oozie.service.ConfigurationService;
 import org.apache.oozie.service.HadoopAccessorService;
 import org.apache.oozie.service.JPAService;
 import org.apache.oozie.service.Services;
-import org.apache.oozie.test.XTestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -309,8 +308,8 @@ public class OozieLocalServer implements MiniCluster {
         System.setProperty(Services.OOZIE_HOME_DIR, new File(fullOozieHomeDir).getAbsolutePath());
         System.setProperty(ConfigurationService.OOZIE_CONFIG_DIR, fullOozieConfDir);
         System.setProperty("oozielocal.log", fullOozieHomeDir + "/oozielocal.log");
-        System.setProperty(XTestCase.OOZIE_TEST_JOB_TRACKER, oozieYarnResourceManagerAddress);
-        System.setProperty(XTestCase.OOZIE_TEST_NAME_NODE, oozieHdfsDefaultFs);
+        System.setProperty("oozie.test.job.tracker", oozieYarnResourceManagerAddress); // org.apache.oozie.test.XTestCase.OOZIE_TEST_JOB_TRACKER
+        System.setProperty("oozie.test.name.node", oozieHdfsDefaultFs); // org.apache.oozie.test.XTestCase.OOZIE_TEST_NAME_NODE
         System.setProperty("oozie.test.db.host", "localhost");
         System.setProperty(ConfigurationService.OOZIE_DATA_DIR, fullOozieHomeDir);
         System.setProperty(HadoopAccessorService.SUPPORTED_FILESYSTEMS, "*");

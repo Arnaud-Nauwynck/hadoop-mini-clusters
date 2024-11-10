@@ -42,6 +42,7 @@ import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.yarn.api.ApplicationConstants.Environment;
 import org.apache.hadoop.yarn.api.records.ContainerId;
 import org.apache.hadoop.yarn.api.records.LocalResource;
+import org.apache.hadoop.yarn.exceptions.ConfigurationException;
 import org.apache.hadoop.yarn.server.nodemanager.ContainerExecutor;
 import org.apache.hadoop.yarn.server.nodemanager.DefaultContainerExecutor;
 import org.apache.hadoop.yarn.server.nodemanager.containermanager.container.Container;
@@ -93,8 +94,12 @@ public class InJvmContainerExecutor extends DefaultContainerExecutor {
   public int launchContainer(ContainerStartContext containerStartContext) throws IOException {
     Container container = containerStartContext.getContainer();
     Path containerWorkDir = containerStartContext.getContainerWorkDir();
-    super.launchContainer(containerStartContext);
-    int exitCode = 0;
+      try {
+          super.launchContainer(containerStartContext);
+      } catch (ConfigurationException e) {
+          throw new RuntimeException(e);
+      }
+      int exitCode = 0;
     if (container.getLaunchContext().getCommands().toString().contains("bin/java")) {
       ExecJavaCliParser result = this.createExecCommandParser(containerWorkDir.toString());
       try {
@@ -148,7 +153,11 @@ public class InJvmContainerExecutor extends DefaultContainerExecutor {
           .setLocalDirs(localDirs)
           .setLocalDirs(logDirs).build();
 
-        super.launchContainer(containerStartContext);
+        try {
+            super.launchContainer(containerStartContext);
+        } catch (ConfigurationException e) {
+            throw new RuntimeException(e);
+        }
         int exitCode = 0;
         if (container.getLaunchContext().getCommands().toString().contains("bin/java")) {
             ExecJavaCliParser result = this.createExecCommandParser(containerWorkDir.toString());

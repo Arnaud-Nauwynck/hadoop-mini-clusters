@@ -17,13 +17,11 @@ package com.github.sakserv.minicluster.impl;
 import com.github.sakserv.minicluster.MiniCluster;
 import com.github.sakserv.minicluster.util.FileUtils;
 import com.google.common.base.Throwables;
-import org.apache.commons.lang.StringUtils;
-import org.apache.hadoop.gateway.GatewayServer;
-import org.apache.hadoop.gateway.services.DefaultGatewayServices;
-import org.apache.hadoop.gateway.services.ServiceLifecycleException;
-import org.apache.hadoop.gateway.services.topology.impl.DefaultTopologyService;
-import org.apache.hadoop.gateway.topology.Service;
-import org.apache.hadoop.gateway.topology.Topology;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.knox.gateway.GatewayServer;
+import org.apache.knox.gateway.config.impl.GatewayConfigImpl;
+import org.apache.knox.gateway.services.DefaultGatewayServices;
+import org.apache.knox.gateway.services.ServiceLifecycleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -165,11 +163,11 @@ public class KnoxLocalCluster implements MiniCluster {
         gatewayDir = new File(homeDir, "gateway-home-" + UUID.randomUUID());
         gatewayDir.mkdirs();
 
-        LocalGatewayConfig config = new LocalGatewayConfig();
+        GatewayConfigImpl config = new GatewayConfigImpl();
         config.set("GATEWAY_HOME", gatewayDir.getAbsolutePath());
-        config.set(LocalGatewayConfig.HTTP_HOST, host);
-        config.setInt(LocalGatewayConfig.HTTP_PORT, port);
-        config.set(LocalGatewayConfig.HTTP_PATH, path);
+        config.set(GatewayConfigImpl.HTTP_HOST, host);
+        config.setInt(GatewayConfigImpl.HTTP_PORT, port);
+        config.set(GatewayConfigImpl.HTTP_PATH, path);
         config.set("default.app.topology.name", cluster);
         config.set("ssl.exclude.protocols", "none");
 
@@ -228,11 +226,12 @@ public class KnoxLocalCluster implements MiniCluster {
         gatewayServer = GatewayServer.startGateway(config, services);
         LOG.info("Gateway address = " + gatewayServer.getURI());
 
-        DefaultTopologyService topologyService = services.getService(DefaultGatewayServices.TOPOLOGY_SERVICE);
-        Topology topology = topologyService.getTopologies().iterator().next();
-        for (Service service : topology.getServices()) {
-            LOG.info("Deployed: {} -> {}", service.getRole(), StringUtils.join(service.getUrls(), ","));
-        }
+        // TODO ARNAUD
+//        DefaultTopologyService topologyService = services.getService(DefaultGatewayServices.TOPOLOGY_SERVICE);
+//        Topology topology = topologyService.getTopologies().iterator().next();
+//        for (Service service : topology.getServices()) {
+//            LOG.info("Deployed: {} -> {}", service.getRole(), StringUtils.join(service.getUrls(), ","));
+//        }
     }
 
     @Override

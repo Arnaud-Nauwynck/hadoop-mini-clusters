@@ -35,11 +35,13 @@
     </developers>
 
     <repositories>
+<!--
         <repository>
             <id>public.repo.hortonworks.com</id>
             <name>Public Hortonworks Maven Repo</name>
             <url>https://repo.hortonworks.com/content/groups/public/</url>
         </repository>
+-->
     </repositories>
 
     <distributionManagement>
@@ -75,16 +77,12 @@
         <module>hadoop-mini-clusters-storm</module>
         <module>hadoop-mini-clusters-kafka</module>
         -->
-<!--
         <module>hadoop-mini-clusters-oozie</module>
--->
         <!--
         <module>hadoop-mini-clusters-mongodb</module>
         <module>hadoop-mini-clusters-hyperscaledb</module>
         -->
-<!--
         <module>hadoop-mini-clusters-knox</module>
--->
         <!--
         <module>hadoop-mini-clusters-kdc</module>
         -->
@@ -124,218 +122,22 @@
         <embedded-mongo.version>1.46.4</embedded-mongo.version>
         <httpclient.version>4.5.2</httpclient.version>
 
-        <!-- Maven Release Plugin doesn't work correctly with properties defined in profiles, duplicate here -->
+        <!--
         <hdp.release.version>2.6.5.0</hdp.release.version>
+        -->
         <storm.version>1.1.0.2.6.5.0-292</storm.version>
         <hive.version>4.0.1</hive.version>
-        <hadoop.version>3.3.4</hadoop.version>
+        <hadoop.version>3.4.1</hadoop.version>
 
-        <hbase.version>1.1.2.2.6.5.0-292</hbase.version>
+        <hbase.version>2.6.1-hadoop3</hbase.version>
         <kafka.version>1.0.0.2.6.5.0-292</kafka.version>
         <kafka.artifactid.version>kafka_2.11</kafka.artifactid.version>
-        <oozie.version>4.2.0.2.6.5.0-292</oozie.version>
-        <knox.version>0.12.0.2.6.5.0-292</knox.version>
+        <oozie.version>5.2.1</oozie.version>
+        <knox.version>2.0.0</knox.version>
 
     </properties>
 
     <profiles>
-
-        <!--
-            Build profiles to use different versions of Hadoop
-        -->
-
-        <!-- HDP 2.6.5.0 -->
-        <profile>
-            <id>2.6.5.0</id>
-            <properties>
-                <hdp.release.version>2.6.5.0</hdp.release.version>
-                <storm.version>1.1.0.2.6.5.0-292</storm.version>
-                <hive.version>1.2.1000.2.6.5.0-292</hive.version>
-                <hadoop.version>2.7.3.2.6.5.0-292</hadoop.version>
-                <hbase.version>1.1.2.2.6.5.0-292</hbase.version>
-                <kafka.version>1.0.0.2.6.5.0-292</kafka.version>
-                <kafka.artifactid.version>kafka_2.11</kafka.artifactid.version>
-                <oozie.version>4.2.0.2.6.5.0-292</oozie.version>
-                <knox.version>0.12.0.2.6.5.0-292</knox.version>
-            </properties>
-        </profile>
-
-        <!-- HDP 2.6.3.0 -->
-        <profile>
-            <id>2.6.3.0</id>
-            <properties>
-                <hdp.release.version>2.6.3.0</hdp.release.version>
-                <storm.version>1.1.0.2.6.3.0-235</storm.version>
-                <hive.version>1.2.1000.2.6.3.0-235</hive.version>
-                <hadoop.version>2.7.3.2.6.3.0-235</hadoop.version>
-                <hbase.version>1.1.2.2.6.3.0-235</hbase.version>
-                <kafka.version>0.10.1.2.6.3.0-235</kafka.version>
-                <kafka.artifactid.version>kafka_2.10</kafka.artifactid.version>
-                <oozie.version>4.2.0.2.6.3.0-235</oozie.version>
-                <knox.version>0.12.0.2.6.3.0-235</knox.version>
-            </properties>
-        </profile>
-
-        <!-- HDP 2.6.2.0 -->
-        <profile>
-            <id>2.6.2.0</id>
-            <properties>
-                <hdp.release.version>2.6.2.0</hdp.release.version>
-                <storm.version>1.1.0.2.6.2.0-205</storm.version>
-                <hive.version>1.2.1000.2.6.2.0-205</hive.version>
-                <hadoop.version>2.7.3.2.6.2.0-205</hadoop.version>
-                <hbase.version>1.1.2.2.6.2.0-205</hbase.version>
-                <kafka.version>0.10.1.2.6.2.0-205</kafka.version>
-                <kafka.artifactid.version>kafka_2.10</kafka.artifactid.version>
-                <oozie.version>4.2.0.2.6.2.0-205</oozie.version>
-                <knox.version>0.12.0.2.6.2.0-205</knox.version>
-            </properties>
-        </profile>
-
-        <!-- HDP 2.6.1.0 -->
-        <profile>
-            <id>2.6.1.0</id>
-            <properties>
-                <hdp.release.version>2.6.1.0</hdp.release.version>
-                <storm.version>1.1.0.2.6.1.0-129</storm.version>
-                <hive.version>1.2.1000.2.6.1.0-129</hive.version>
-                <hadoop.version>2.7.3.2.6.1.0-129</hadoop.version>
-                <hbase.version>1.1.2.2.6.1.0-129</hbase.version>
-                <kafka.version>0.10.1.2.6.1.0-129</kafka.version>
-                <kafka.artifactid.version>kafka_2.10</kafka.artifactid.version>
-                <oozie.version>4.2.0.2.6.1.0-129</oozie.version>
-                <knox.version>0.12.0.2.6.1.0-129</knox.version>
-            </properties>
-        </profile>
-
-        <!-- HDP 2.6.0.3 -->
-        <profile>
-            <id>2.6.0.3</id>
-            <properties>
-                <hdp.release.version>2.6.0.3</hdp.release.version>
-                <storm.version>1.1.0.2.6.0.3-8</storm.version>
-                <hive.version>1.2.1000.2.6.0.3-8</hive.version>
-                <hadoop.version>2.7.3.2.6.0.3-8</hadoop.version>
-                <hbase.version>1.1.2.2.6.0.3-8</hbase.version>
-                <kafka.version>0.10.1.2.6.0.3-8</kafka.version>
-                <kafka.artifactid.version>kafka_2.10</kafka.artifactid.version>
-                <oozie.version>4.2.0.2.6.0.3-8</oozie.version>
-                <knox.version>0.12.0.2.6.0.3-8</knox.version>
-            </properties>
-        </profile>
-
-        <!-- HDP 2.5.3.0 -->
-        <profile>
-            <id>2.5.3.0</id>
-            <properties>
-                <hdp.release.version>2.5.3.0</hdp.release.version>
-                <storm.version>1.0.1.2.5.3.0-37</storm.version>
-                <hive.version>1.2.1000.2.5.3.0-37</hive.version>
-                <hadoop.version>2.7.3.2.5.3.0-37</hadoop.version>
-                <hbase.version>1.1.2.2.5.3.0-37</hbase.version>
-                <kafka.version>0.10.0.2.5.3.0-37</kafka.version>
-                <kafka.artifactid.version>kafka_2.10</kafka.artifactid.version>
-                <oozie.version>4.2.0.2.5.3.0-37</oozie.version>
-                <knox.version>0.9.0.2.5.3.0-37</knox.version>
-            </properties>
-        </profile>
-
-        <!-- HDP 2.5.0.0 -->
-        <profile>
-            <id>2.5.0.0</id>
-            <properties>
-                <hdp.release.version>2.5.0.0</hdp.release.version>
-                <storm.version>1.0.1.2.5.0.0-1245</storm.version>
-                <hive.version>1.2.1000.2.5.0.0-1245</hive.version>
-                <hadoop.version>2.7.3.2.5.0.0-1245</hadoop.version>
-                <hbase.version>1.1.2.2.5.0.0-1245</hbase.version>
-                <kafka.version>0.10.0.2.5.0.0-1245</kafka.version>
-                <kafka.artifactid.version>kafka_2.10</kafka.artifactid.version>
-                <oozie.version>4.2.0.2.5.0.0-1245</oozie.version>
-                <knox.version>0.9.0.2.5.0.0-1245</knox.version>
-            </properties>
-        </profile>
-
-        <!-- HDP 2.4.2.0 -->
-        <profile>
-            <id>2.4.2.0</id>
-            <properties>
-                <hdp.release.version>2.4.2.0</hdp.release.version>
-                <storm.version>0.10.0.2.4.2.0-258</storm.version>
-                <hive.version>1.2.1000.2.4.2.0-258</hive.version>
-                <hadoop.version>2.7.1.2.4.2.0-258</hadoop.version>
-                <hbase.version>1.1.2.2.4.2.0-258</hbase.version>
-                <kafka.version>0.9.0.2.4.2.0-258</kafka.version>
-                <kafka.artifactid.version>kafka_2.10</kafka.artifactid.version>
-                <oozie.version>4.2.0.2.4.2.0-258</oozie.version>
-                <knox.version>0.6.0.2.4.2.0-258</knox.version>
-            </properties>
-        </profile>
-
-        <!-- HDP 2.4.0.0 -->
-        <profile>
-            <id>2.4.0.0</id>
-            <properties>
-                <hdp.release.version>2.4.0.0</hdp.release.version>
-                <storm.version>0.10.0.2.4.0.0-169</storm.version>
-                <hive.version>1.2.1000.2.4.0.0-169</hive.version>
-                <hadoop.version>2.7.1.2.4.0.0-169</hadoop.version>
-                <hbase.version>1.1.2.2.4.0.0-169</hbase.version>
-                <kafka.version>0.9.0.2.4.0.0-169</kafka.version>
-                <kafka.artifactid.version>kafka_2.10</kafka.artifactid.version>
-                <oozie.version>4.2.0.2.4.0.0-169</oozie.version>
-                <knox.version>0.6.0.2.4.0.0-169</knox.version>
-            </properties>
-        </profile>
-
-        <!-- HDP 2.3.4.0 -->
-        <profile>
-            <id>2.3.4.0</id>
-            <properties>
-                <hdp.release.version>2.3.4.0</hdp.release.version>
-                <storm.version>0.10.0.2.3.4.0-3485</storm.version>
-                <hive.version>1.2.1.2.3.4.0-3485</hive.version>
-                <hadoop.version>2.7.1.2.3.4.0-3485</hadoop.version>
-                <hbase.version>1.1.2.2.3.4.0-3485</hbase.version>
-                <kafka.version>0.9.0.2.3.4.0-3485</kafka.version>
-                <kafka.artifactid.version>kafka_2.10</kafka.artifactid.version>
-                <oozie.version>4.2.0.2.3.4.0-3485</oozie.version>
-                <knox.version>0.6.0.2.3.4.0-3485</knox.version>
-            </properties>
-        </profile>
-
-        <!-- HDP 2.3.2.0 -->
-        <profile>
-            <id>2.3.2.0</id>
-            <properties>
-                <hdp.release.version>2.3.2.0</hdp.release.version>
-                <storm.version>0.10.0.2.3.2.0-2950</storm.version>
-                <hive.version>1.2.1.2.3.2.0-2950</hive.version>
-                <hadoop.version>2.7.1.2.3.2.0-2950</hadoop.version>
-                <hbase.version>1.1.2.2.3.2.0-2950</hbase.version>
-                <kafka.version>0.8.2.2.3.2.0-2950</kafka.version>
-                <kafka.artifactid.version>kafka_2.9.2</kafka.artifactid.version>
-                <oozie.version>4.2.0.2.3.2.0-2950</oozie.version>
-                <knox.version>0.6.0.2.3.2.0-2950</knox.version>
-            </properties>
-        </profile>
-
-        <!-- HDP 2.3.0.0 -->
-        <profile>
-            <id>2.3.0.0</id>
-            <properties>
-                <hdp.release.version>2.3.0.0</hdp.release.version>
-                <storm.version>0.10.0.2.3.0.0-2557</storm.version>
-                <hive.version>1.2.1.2.3.0.0-2557</hive.version>
-                <hadoop.version>2.7.1.2.3.0.0-2557</hadoop.version>
-                <hbase.version>1.1.1.2.3.0.0-2557</hbase.version>
-                <kafka.version>0.8.2.2.3.0.0-2557</kafka.version>
-                <kafka.artifactid.version>kafka_2.9.2</kafka.artifactid.version>
-                <oozie.version>4.2.0.2.3.0.0-2557</oozie.version>
-                <knox.version>0.6.0.2.3.0.0-2557</knox.version>
-            </properties>
-        </profile>
-
         <!-- release signing profile -->
         <profile>
             <id>release-sign-artifacts</id>
@@ -559,5 +361,18 @@
         </plugins>
     </reporting>
 
-    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.yetus</groupId>
+                <artifactId>audience-annotations</artifactId>
+                <version>0.15.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.hadoop</groupId>
+                <artifactId>hadoop-annotations</artifactId>
+                <version>${hadoop.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
