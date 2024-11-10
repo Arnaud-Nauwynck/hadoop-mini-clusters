@@ -18,8 +18,8 @@ import java.io.File;
 
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.metastore.HiveMetaStore;
-import org.apache.hadoop.hive.metastore.txn.TxnDbUtil;
-import org.apache.hadoop.hive.thrift.HadoopThriftAuthBridge;
+import org.apache.hadoop.hive.metastore.security.HadoopThriftAuthBridge;
+import org.apache.hadoop.hive.metastore.security.HadoopThriftAuthBridge23;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -165,7 +165,7 @@ public class HiveLocalMetaStore implements MiniCluster {
         public void run() {
             try {
                 HiveMetaStore.startMetaStore(hiveMetastorePort, 
-                        new HadoopThriftAuthBridge(), 
+                        new HadoopThriftAuthBridge23() {},
                         hiveConf);
             } catch (Throwable t) {
                 t.printStackTrace();
@@ -203,12 +203,12 @@ public class HiveLocalMetaStore implements MiniCluster {
 
     @Override
     public void configure() throws Exception {
-        hiveConf.setVar(HiveConf.ConfVars.METASTOREURIS,
+        hiveConf.setVar(HiveConf.ConfVars.METASTORE_URIS,
                 "thrift://" + hiveMetastoreHostname + ":" + hiveMetastorePort);
-        hiveConf.setVar(HiveConf.ConfVars.SCRATCHDIR, hiveScratchDir);
-        hiveConf.setVar(HiveConf.ConfVars.METASTORECONNECTURLKEY,
+        hiveConf.setVar(HiveConf.ConfVars.SCRATCH_DIR, hiveScratchDir);
+        hiveConf.setVar(HiveConf.ConfVars.METASTORE_CONNECT_URL_KEY,
                 "jdbc:derby:;databaseName=" + hiveMetastoreDerbyDbDir + ";create=true");
-        hiveConf.setVar(HiveConf.ConfVars.METASTOREWAREHOUSE, new File(hiveWarehouseDir).getAbsolutePath());
+        hiveConf.setVar(HiveConf.ConfVars.METASTORE_WAREHOUSE, new File(hiveWarehouseDir).getAbsolutePath());
         hiveConf.setBoolVar(HiveConf.ConfVars.HIVE_IN_TEST, true);
         hiveConf.set("datanucleus.schema.autoCreateTables", "true");
         hiveConf.set("hive.metastore.schema.verification", "false");

@@ -97,11 +97,11 @@ public class HiveLocalMetaStoreIntegrationTest {
         hiveConf.set(HiveConf.ConfVars.HIVE_COMPACTOR_INITIATOR_ON.varname, "true");
         hiveConf.set(HiveConf.ConfVars.HIVE_COMPACTOR_WORKER_THREADS.varname, "5");
         hiveConf.set("hive.root.logger", "DEBUG,console");
-        hiveConf.setIntVar(HiveConf.ConfVars.METASTORETHRIFTCONNECTIONRETRIES, 3);
-        hiveConf.set(HiveConf.ConfVars.PREEXECHOOKS.varname, "");
-        hiveConf.set(HiveConf.ConfVars.POSTEXECHOOKS.varname, "");
-        System.setProperty(HiveConf.ConfVars.PREEXECHOOKS.varname, " ");
-        System.setProperty(HiveConf.ConfVars.POSTEXECHOOKS.varname, " ");
+        hiveConf.setIntVar(HiveConf.ConfVars.METASTORE_THRIFT_CONNECTION_RETRIES, 3);
+        hiveConf.set(HiveConf.ConfVars.PRE_EXEC_HOOKS.varname, "");
+        hiveConf.set(HiveConf.ConfVars.POST_EXEC_HOOKS.varname, "");
+        System.setProperty(HiveConf.ConfVars.PRE_EXEC_HOOKS.varname, " ");
+        System.setProperty(HiveConf.ConfVars.POST_EXEC_HOOKS.varname, " ");
         return hiveConf;
     }
 
